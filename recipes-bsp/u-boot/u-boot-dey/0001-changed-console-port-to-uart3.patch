@@ -1,0 +1,54 @@
+From d61aa577dc1e5c5fa1321dc6b889c4f10a7d8be8 Mon Sep 17 00:00:00 2001
+From: Cameron Haegle <cameronh@digi.com>
+Date: Fri, 17 Aug 2018 11:58:31 -0500
+Subject: [PATCH] changed console port to uart3
+
+---
+ board/digi/ccimx6sbc/ccimx6sbc.c | 8 ++++----
+ include/configs/ccimx6sbc.h      | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/board/digi/ccimx6sbc/ccimx6sbc.c b/board/digi/ccimx6sbc/ccimx6sbc.c
+index f0087c6..565a0be 100644
+--- a/board/digi/ccimx6sbc/ccimx6sbc.c
++++ b/board/digi/ccimx6sbc/ccimx6sbc.c
+@@ -59,9 +59,9 @@ unsigned int board_id = CARRIERBOARD_ID_UNDEFINED;
+ 	PAD_CTL_PUS_100K_DOWN | PAD_CTL_SPEED_MED |               \
+ 	PAD_CTL_DSE_40ohm   | PAD_CTL_SRE_FAST)
+ 
+-static iomux_v3_cfg_t const uart4_pads[] = {
+-	MX6_PAD_KEY_COL0__UART4_TX_DATA | MUX_PAD_CTRL(UART_PAD_CTRL),
+-	MX6_PAD_KEY_ROW0__UART4_RX_DATA | MUX_PAD_CTRL(UART_PAD_CTRL),
++static iomux_v3_cfg_t const uart3_pads[] = {
++	MX6_PAD_EIM_D24__UART3_TX_DATA | MUX_PAD_CTRL(UART_PAD_CTRL),
++	MX6_PAD_EIM_D25__UART3_RX_DATA | MUX_PAD_CTRL(UART_PAD_CTRL),
+ };
+ 
+ #ifdef CONFIG_CONSOLE_ENABLE_GPIO
+@@ -253,7 +253,7 @@ int board_phy_config(struct phy_device *phydev)
+ 
+ static void setup_iomux_uart(void)
+ {
+-	imx_iomux_v3_setup_multiple_pads(uart4_pads, ARRAY_SIZE(uart4_pads));
++	imx_iomux_v3_setup_multiple_pads(uart3_pads, ARRAY_SIZE(uart3_pads));
+ }
+ 
+ int board_eth_init(bd_t *bis)
+diff --git a/include/configs/ccimx6sbc.h b/include/configs/ccimx6sbc.h
+index 340bbc5..5946280 100644
+--- a/include/configs/ccimx6sbc.h
++++ b/include/configs/ccimx6sbc.h
+@@ -30,8 +30,8 @@
+ #endif
+ #define CONFIG_BOARD_DESCRIPTION	"SBC"
+ 
+-#define CONFIG_MXC_UART_BASE		UART4_BASE
+-#define CONFIG_CONSOLE_DEV		"ttymxc3"
++#define CONFIG_MXC_UART_BASE		UART3_BASE
++#define CONFIG_CONSOLE_DEV		"ttymxc2"
+ 
+ #if defined(CONFIG_MX6DL) || defined(CONFIG_MX6S)
+ #define CONFIG_DEFAULT_FDT_FILE		"zImage-imx6dl-" CONFIG_SYS_BOARD ".dtb"
+-- 
+2.7.4
+
